@@ -1,0 +1,21 @@
+body {
+  padding:10px;
+}
+.album-panel {
+  min-height:400px;
+  margin-right:5px;
+}
+.description {
+  padding:5px;
+}
+.date {
+  float:right;
+}
+
+
+textarea {
+  width: 100%;
+}
+.btn {
+  margin-top:10px;
+}

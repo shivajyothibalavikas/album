@@ -1,0 +1,79 @@
+<html ng-app='Myapp'>
+  <head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../vendor/css/bootstrap.min.css">
+    <script src="../vendor/js/bootstrap.min.js"></script>
+    <script src="../vendor/js/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-controller="AlbumListController"> 
+      <input type="text" placeholder="type to search" ng-model="searchFor"> 
+      <p>
+        Total records : {{albums.length}}
+      </p>
+      <div class="row">
+        <div class="col-md-4" ng-repeat="album in albums | filter:searchFor | orderBy:'date'"> 
+          <div class="album-panel panel panel-primary">
+            <div class="panel-heading">
+              {{album.name}} 
+              <div class="date">
+                {{album.date}}
+              </div>
+            </div>
+            <p class="description">
+              {{album.title}}
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <form name="add_album_form" novalidate>
+        <div class="add_new row">
+          <div class="col-md-4">
+            <h3> Add New Album </h3>
+              <div class="album-panel panel panel-default">
+                <div class="panel-heading">
+                  <input style="color:black" type="text" placeholder="album name" ng-model="album_new.name"/>
+                  <div class="date">
+                    <input style="color:black" type="text" placeholder="dd/mm/yy" ng-model="album_new.date"/>
+                  </div>
+                </div>
+                <p class="panel-body description">
+                  <textarea rows=15 placeholder="title please" ng-model="album_new.title"></textarea>
+                  <button type="button" class="btn btn-success" ng-click="addnew(album_new)"> Add New Album </button>
+                </p>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    
+    <script type="text/javascript">
+    var Myapp = angular.module('Myapp' ,[]);
+    Myapp.controller('AlbumListController', ['$scope', function($scope) {
+      $scope.albums = [{name:'sringeri',title:'visit to temple', date:'16-4-2016'},
+                  {name:'chikkamagalore',title:'just to meet', date:'18-4-2016'},
+                  {name:'sirsi',title:'brother marriage', date:'16-5-2016'},
+                  {name:'sringeri', title:'vacation', date:'10-5-2001'}];
+        $scope.addnew = function(album_new) {
+          $scope.add_error = " ";
+          if(!album_new.name){
+            $scope.add_error = "Enter album name";
+          }
+          else if(!album_new.date || album_new.date.length < 10) {
+            $scope.add_error = "No date or Invalid date"; 
+          }
+          else if(!album_new.title){
+            $scope.add_error = "Enter title";
+          }
+          else {
+            $scope.add_error = " ";
+            $scope.albums.push(album_new);        
+            $scope.album_new = {};
+          }
+    }]);
+    </script>
+  </body>
+</html>
+
